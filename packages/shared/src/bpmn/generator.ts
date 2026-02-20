@@ -202,7 +202,7 @@ export async function validateBpmnXml(xml: string): Promise<{ valid: boolean; er
 /**
  * Parses BPMN XML and returns the root definitions element.
  */
-export async function parseBpmnXml(xml: string) {
+export async function parseBpmnXml(xml: string): Promise<any> {
   const moddle = new BpmnModdle();
   const { rootElement } = await moddle.fromXML(xml);
   return rootElement;

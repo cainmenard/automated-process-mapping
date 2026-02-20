@@ -1,4 +1,5 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
+import { AuthUserButton } from '../lib/auth.js';
 
 const NAV_ITEMS = [
   { path: '/', label: 'Dashboard' },
@@ -41,10 +42,7 @@ export function Layout() {
           </nav>
         </div>
         <div className="flex items-center gap-3">
-          {/* Clerk UserButton will go here */}
-          <div className="w-8 h-8 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 text-sm font-medium">
-            U
-          </div>
+          <AuthUserButton />
         </div>
       </header>
 

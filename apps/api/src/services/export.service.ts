@@ -183,7 +183,7 @@ export async function exportToSvg(bpmnXml: string): Promise<ExportResult> {
     await page.setContent(html, { waitUntil: 'networkidle0' });
     await page.waitForSelector('.bjs-container', { timeout: 10000 });
 
-    const svgContent = await page.$eval('#svg-output', (el) => el.textContent ?? '');
+    const svgContent = await page.$eval('#svg-output', (el: any) => el.textContent ?? '');
 
     return {
       buffer: Buffer.from(svgContent, 'utf-8'),
