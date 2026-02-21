@@ -18,7 +18,9 @@
     "db:generate": "npm run db:generate -w apps/api",
     "db:migrate": "npm run db:migrate -w apps/api",
     "db:push": "npm run db:push -w apps/api",
-    "db:studio": "npm run db:studio -w apps/api"
+    "db:studio": "npm run db:studio -w apps/api",
+    "db:migrate:run": "npm run db:migrate:run -w apps/api",
+    "db:seed": "npm run db:seed -w apps/api"
   },
   "devDependencies": {
     "@types/node": "^22.13.0",

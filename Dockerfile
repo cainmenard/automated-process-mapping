@@ -34,7 +34,7 @@ COPY package.json package-lock.json* ./
 COPY packages/shared/package.json ./packages/shared/
 COPY apps/api/package.json ./apps/api/
 COPY apps/web/package.json ./apps/web/
-RUN npm install
+RUN npm ci
 
 # ---- Build ----
 FROM deps AS build
@@ -44,18 +44,19 @@ RUN npm run build
 # ---- Production ----
 FROM base AS production
 COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/packages/shared/node_modules ./packages/shared/node_modules
-COPY --from=deps /app/apps/api/node_modules ./apps/api/node_modules
 COPY --from=build /app/packages/shared/dist ./packages/shared/dist
 COPY --from=build /app/packages/shared/package.json ./packages/shared/
 COPY --from=build /app/apps/api/dist ./apps/api/dist
 COPY --from=build /app/apps/api/package.json ./apps/api/
+COPY --from=build /app/apps/api/drizzle ./apps/api/drizzle
 COPY --from=build /app/apps/web/dist ./apps/web/dist
 COPY package.json ./
+COPY apps/api/entrypoint.sh ./apps/api/
 
-# Serve frontend static files from the API in production
+RUN chmod +x ./apps/api/entrypoint.sh
+
 ENV NODE_ENV=production
 ENV PORT=3001
 
 EXPOSE 3001
-CMD ["node", "apps/api/dist/server.js"]
+CMD ["./apps/api/entrypoint.sh"]
